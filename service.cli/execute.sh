@@ -63,9 +63,12 @@ fi
 
 # Launch data retrieval and analysis
 echo "Starting data retrieval"
-git clone https://github.com/neurogarg/SPARC-test-2024.git
-cd SPARC-test-2024
-python3 main.py "${args[@]}"
+git clone https://github.com/neurogarg/DataWave.git
+cd DataWave
+python3 main.py \
+    -i "$dat_filen" \
+    -i "$analysis_filen" \
+    -i "$json_file"
 echo "Analysis and retrieval completed successfully, adding it to the output..."
 # Add derived_files to output
 
