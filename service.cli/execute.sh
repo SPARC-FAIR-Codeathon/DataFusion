@@ -56,6 +56,8 @@ else
 fi
 
 
+f_path="$filen"
+
 # put the code to execute the service here
 # For example:
 #env
@@ -63,13 +65,13 @@ fi
 
 # Launch data retrieval and analysis
 echo "Starting data retrieval"
-cd ..
-cd datawave
 
 python3 main.py  \
   -i "$dat_filen" \
   -i "$analysis_filen" \
-  -i "$json_filen"
+  -i "$json_filen" \
+  -f "f_path"
+
 
 echo "Analysis and retrieval completed successfully, adding it to the output..."
 # Add derived_files to output
