@@ -67,8 +67,12 @@ ENV INPUT_FOLDER="/input" \
 
 WORKDIR /home/${SC_USER_NAME}
 
-# copy lib for python packages
+# copy lib for python packages and the src files containing my code
 COPY --from=build --chown=${SC_USER_NAME}:${SC_USER_NAME} /usr/local/lib /usr/local/lib
+
+COPY --from=build --chown=${SC_USER_NAME}:${SC_USER_NAME} /build/src/datawave /home/${SC_USER_NAME}/datawave
+
+
 
 # ------------------------------------------------------------------------------------
 #TODO:
@@ -86,8 +90,8 @@ COPY --chown=${SC_USER_NAME}:${SC_USER_NAME} service.cli/ service.cli/
 # necessary to be able to call run directly without sh in front
 ENV PATH="/home/${SC_USER_NAME}/service.cli:${PATH}"
 
-# copy binaries from build
-COPY --from=build --chown=${SC_USER_NAME}:${SC_USER_NAME} /build/bin datawave
+
+
 
 # ------------------------------------------------------------------------------------
 #TODO:
