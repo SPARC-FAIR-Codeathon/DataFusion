@@ -20,30 +20,6 @@ OSPARC_DIR:=$(CURDIR)/.osparc
 
 APP_NAME := datawave
 
-# PYTHON ENVIRON ---------------------------------------------------------------------------------------
-.PHONY: devenv
-.venv:
-	@python3 --version
-	python3 -m venv $@
-	# upgrading package managers
-	$@/bin/pip install --upgrade \
-		pip \
-		wheel \
-		setuptools
-
-devenv: .venv  ## create a python virtual environment with tools to dev, run and tests cookie-cutter
-	# installing extra tools
-	@$</bin/pip3 install pip-tools
-	# your dev environment contains
-	@$</bin/pip3 list
-	@echo "To activate the virtual environment, run 'source $</bin/activate'"
-
-# Upgrades and tracks python packages versions installed in the service ---------------------------------
-requirements: devenv ## runs pip-tools to build requirements.txt that will be installed in the JupyterLab
-	# freezes requirements
-	pip-compile src/requirements.in --resolver=backtracking --output-file src/requirements.txt
-
-
 
 # INTEGRATION -----------------------------------------------------------------
 METADATA := .osparc/metadata.yml
