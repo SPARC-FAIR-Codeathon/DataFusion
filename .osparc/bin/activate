@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# Store the current PATH
+export _OLD_OSPARC_PATH=$PATH
+
+
+# Get the directory of the currently running script
+BIN_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+OSPARC_ENV=$(dirname "${BIN_DIR}")
+
+
+# Add .osparc/bin to the PATH
+export PATH="$BIN_DIR/.osparc/bin:$PATH"
+
+
+deactivate () {
+    # Unset the OLD_PATH variable    
+    # ! [ -z ${VAR+_} ] returns true if VAR is declared at all
+    if ! [ -z "${_OLD_OSPARC_PATH:+_}" ] ; then
+        PATH="$_OLD_OSPARC_PATH"
+        export PATH
+        unset _OLD_OSPARC_PATH
+    fi
+
+    # The hash command must be called to get it to forget past
+    # commands. Without forgetting past commands the $PATH changes
+    # we made may not be respected
+    hash -r 2>/dev/null
+
+
+    # Removes (osparc) in prompt
+    if ! [ -z "${_OLD_OSPARC_PS1+_}" ] ; then
+        PS1="$_OLD_OSPARC_PS1"
+        export PS1
+        unset _OLD_OSPARC_PS1
+    fi
+
+    unset OSPARC_ENV
+    unset OSPARC_ENV_PROMPT
+    if [ ! "${1-}" = "nondestructive" ] ; then
+    # Self destruct!
+        unset -f deactivate
+        echo "osparc environment deactivated"
+    fi
+}
+
+# unset irrelevant variables
+deactivate nondestructive
+
+
+# Adds (osparc) in prompt
+if [ "xosparc" != x ] ; then
+    OSPARC_ENV_PROMPT=".osparc"
+else
+    OSPARC_ENV_PROMPT=$(basename "$OSPARC_ENV")
+fi
+export OSPARC_ENV_PROMPT
+
+
+if [ -z "${OSPARC_ENV_DISABLE_PROMPT-}" ] ; then
+    _OLD_OSPARC_PS1="${PS1-}"
+    PS1="(${OSPARC_ENV_PROMPT}) ${PS1-}"
+    export PS1
+fi
+
+# Inform the user
+echo "Environment activated. To deactivate, type 'deactivate'"

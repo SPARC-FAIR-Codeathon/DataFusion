@@ -1,0 +1,32 @@
+version: '3.7'
+services:
+  datawave:
+    build:
+      context: ./
+      dockerfile: docker/python/Dockerfile
+      labels:
+        io.simcore.name: '{"name":"DataWave"}'
+        io.simcore.description: '{"description":"A versatile service that converts
+          diverse time series data formats into CSV, visualizes the data, and performs
+          dynamic analysis"}'
+        io.simcore.key: '{"key":"simcore/services/comp/datawave"}'
+        io.simcore.version: '{"version":"0.1.0"}'
+        io.simcore.integration-version: '{"integration-version":"1.0.0"}'
+        io.simcore.type: '{"type":"computational"}'
+        io.simcore.authors: '{"authors":[{"name":"Pranjal Garg","email":"pranjaldun@gmail.com","affiliation":"AIIMS,
+          Rishikesh"}]}'
+        io.simcore.contact: '{"contact":"pranjaldun@gmail.com"}'
+        io.simcore.inputs: '{"inputs":{"input_1":{"displayOrder":1.0,"label":"Data
+          file","description":"different format data files","type":"data:*/*"},"input_2":{"displayOrder":2.0,"label":"Python
+          file","description":"python file in the workflow for pilot analysis","type":"data:*/*"},"input_3":{"displayOrder":3.0,"label":"json
+          file","description":"field names json file","type":"data:*/*"}}}'
+        io.simcore.outputs: '{"outputs":{"output_1":{"displayOrder":1.0,"label":"csv
+          file","description":"archive of basic csv file of time series","type":"data:*/*","fileToKeyMap":{"derived_files.zip":"output_1"}}}}'
+        org.label-schema.build-date: 2024-08-11T15:48:18+0000
+        org.label-schema.schema-version: '1.0'
+        org.label-schema.vcs-ref: ''
+        org.label-schema.vcs-url: ''
+        simcore.service.restart-policy: no-restart
+        simcore.service.settings: '[{"name":"Resources","type":"Resources","value":{"Limits":{"NanoCPUs":1000000000,"MemoryBytes":2147483648}}}]'
+      target: production
+    image: simcore/services/comp/datawave:0.1.0
