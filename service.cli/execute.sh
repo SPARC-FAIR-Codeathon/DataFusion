@@ -67,9 +67,9 @@ f_path="$filen"
 echo "Starting data retrieval"
 
 python3 main.py  \
-  -i "$dat_filen" \
-  -i "$analysis_filen" \
-  -i "$json_filen" \
+  -d "$dat_filen" \
+  -p "$analysis_filen" \
+  -j "$json_filen" \
   -f "f_path"
 
 
