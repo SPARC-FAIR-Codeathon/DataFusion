@@ -44,9 +44,9 @@ fi
 
 
 echo "Getting Json file from input_3..."
-num_pyfile=$(find "${INPUT_FOLDER}" \( -type f -name "*.json" \) | wc -l)
+num_jsonfile=$(find "${INPUT_FOLDER}" \( -type f -name "*.json" \) | wc -l)
 
-if [ "$num_pyfile" = 1 ]; then
+if [ "$num_jsonfile" = 1 ]; then
     filen="$(find "${INPUT_FOLDER}" \( -type f -name "*.json" \))"
     cp "$filen" .
     json_filen="$(basename "${filen}")"
