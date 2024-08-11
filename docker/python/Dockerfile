@@ -67,7 +67,7 @@ ENV INPUT_FOLDER="/input" \
 
 WORKDIR /home/${SC_USER_NAME}
 
-# copy lib for python packages, bin for axondeepseg binaries, and build for AxonDeepSeg source
+# copy lib for python packages
 COPY --from=build --chown=${SC_USER_NAME}:${SC_USER_NAME} /usr/local/lib /usr/local/lib
 
 # ------------------------------------------------------------------------------------
