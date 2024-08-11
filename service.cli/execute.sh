@@ -63,16 +63,17 @@ fi
 
 # Launch data retrieval and analysis
 echo "Starting data retrieval"
-git clone https://github.com/neurogarg/DataWave.git
-cd DataWave
-python3 main.py \
-    -i "$dat_filen" \
-    -i "$analysis_filen" \
-    -i "$json_filen"
+cd ..
+cd datawave
+
+python3 main.py  \
+  -i "$dat_filen" \
+  -i "$analysis_filen" \
+  -i "$json_filen"
+
 echo "Analysis and retrieval completed successfully, adding it to the output..."
 # Add derived_files to output
 
 zip -r "${OUTPUT_FOLDER}"/derived_files.zip "derived_file.csv" "sample_plot.png" "analysis_plot.png"
-
 
 
