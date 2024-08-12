@@ -3,6 +3,7 @@ import json
 import argparse
 import os
 import get_data
+import run_analysis_file
 
 def read_json(file_path):
     with open(file_path, 'r') as f:
@@ -15,8 +16,8 @@ parser = argparse.ArgumentParser(description='Data retrieval and analysis.')
 
 # Separate flags for each type of input
 parser.add_argument('--data-file', '-d', required=True, help='File name to the data file (e.g., .mat, .nwb, .txt).')
-parser.add_argument('--python-file', '-p', required=True, help='File name to the Python file for custom processing.')
-parser.add_argument('--json-file', '-j', required=True, help='File name to the JSON configuration file.')
+parser.add_argument('--python-file', '-p', required=False, help='File name to the Python file for custom processing.')
+parser.add_argument('--json-file', '-j', required=False, help='File name to the JSON configuration file.')
 
 args = parser.parse_args()
 
@@ -39,15 +40,11 @@ if data_file_ext not in supported_ext:
 field_name_dict = read_json(json_file)
 get_final_df = get_data.run(data_file_ext, data_file, field_name_dict)
 
-# # Create an output directory
-# output_dir = 'output'
-# os.makedirs(output_dir, exist_ok=True)
-#
-# # Set the output file prefix
-# output_prefix = os.path.join(output_dir, os.path.splitext(os.path.basename(data_file))[0])
 
 # Save the DataFrame to a CSV file
 csv_file_path = f"derived_file.csv"
 get_final_df.to_csv(csv_file_path, index=False)
 
-print("files saved successfully")
+
+## run python analysis code
+run_analysis_file.run(python_file, get_final_df)
