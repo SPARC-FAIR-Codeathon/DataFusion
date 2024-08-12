@@ -5,6 +5,7 @@ import mat_file
 import rhd_file
 import pandas as pd
 
+
 def run(data_file_ext, data_file, field_name_dictionary):
     supported_ext = [".mat", ".nwb", ".csv", ".txt", ".adicht", ".rhd"]
 
@@ -25,7 +26,9 @@ def run(data_file_ext, data_file, field_name_dictionary):
 
     elif data_file_ext == supported_ext[5]: ## rhd
         df = rhd_file.run(data_file)
-        rhd_file.rhd_to_nwb(data_file)
+        rhd_file.rhd_to_nwb(data_file
 
+    elif data_file_ext == supported_ext[2]: ## csv
+        df = pd.read_csv(data_file)
 
     return df
