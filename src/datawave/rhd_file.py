@@ -1,7 +1,11 @@
 ## created with help from- https://github.com/Intan-Technologies/load-rhd-notebook-python/tree/main
 import importrhdutilities as rhdutils
 import pandas as pd
-import subprocess
+
+from datetime import datetime
+from zoneinfo import ZoneInfo
+from neuroconv.datainterfaces import IntanRecordingInterface
+import shutil
 
 class ChannelNotFoundError(Exception):
     pass
@@ -90,9 +94,17 @@ def run(filename):
 
 ## todo
 def rhd_to_nwb (filename):
-    repo_url = "https://github.com/Intan-Technologies/IntanToNWB.git"
-    clone_dir = 'IntanToNWB'
-    try:
-        subprocess.run(['git', 'clone', repo_url, clone_dir], check=True)
-    except subprocess.CalledProcessError as e:
-        return None
+
+    interface = IntanRecordingInterface(file_path=filename, verbose=False)
+
+    # Extract what metadata we can from the source files
+    metadata = interface.get_metadata()
+    # session_start_time is required for conversion. If it cannot be inferred
+    # automatically from the source files you must supply one.
+    session_start_time = datetime(2020, 1, 1, 12, 30, 0, tzinfo=ZoneInfo("US/Pacific"))
+    metadata["NWBFile"].update(session_start_time=session_start_time)
+    nwbfile_path = 'derived_file.nwb'
+    interface.run_conversion(nwbfile_path=nwbfile_path, metadata=metadata)
+    shutil.move("converted.h5", "extra_derived_files")
+
+
