@@ -5,5 +5,5 @@ matplotlib
 scipy
 regex
 h5py
-adi-reader
 pynwb==2.0.0
+neuroconv
