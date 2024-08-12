@@ -4,6 +4,7 @@ import argparse
 import os
 import get_data
 import run_analysis_file
+import pandas as pd
 
 def read_json(file_path):
     with open(file_path, 'r') as f:
@@ -45,8 +46,11 @@ except Exception as e:
 
 get_final_df = get_data.run(data_file_ext, data_file, field_name_dict)
 
+if get_final_df is None:
+    get_final_df = pd.DataFrame()
+
 # Save the DataFrame to a CSV file
-csv_file_path = f"derived_file.csv"
+csv_file_path = "derived_file.csv"
 get_final_df.to_csv(csv_file_path, index=False)
 
 

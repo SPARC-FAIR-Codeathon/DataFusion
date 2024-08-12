@@ -1,0 +1,11 @@
+pandas
+numpy
+argparse
+matplotlib
+scipy
+h5py
+neo
+spikeinterface
+probeinterface
+quantities
+neuroconv

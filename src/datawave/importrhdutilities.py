@@ -64,35 +64,35 @@ def load_file(filename):
     return result, data_present
 
 
-# def print_all_channel_names(result):
-#     """Searches through all present signal types in 'result' dict, and prints
-#     the names of these channels. Useful, for example, to determine names of
-#     channels that can be plotted.
-#     """
-#     if 'amplifier_channels' in result:
-#         print_names_in_group(result['amplifier_channels'])
+def print_all_channel_names(result):
+    """Searches through all present signal types in 'result' dict, and prints
+    the names of these channels. Useful, for example, to determine names of
+    channels that can be plotted.
+    """
+    if 'amplifier_channels' in result:
+        print_names_in_group(result['amplifier_channels'])
 
-#     if 'aux_input_channels' in result:
-#         print_names_in_group(result['aux_input_channels'])
+    if 'aux_input_channels' in result:
+        print_names_in_group(result['aux_input_channels'])
 
-#     if 'supply_voltage_channels' in result:
-#         print_names_in_group(result['supply_voltage_channels'])
+    if 'supply_voltage_channels' in result:
+        print_names_in_group(result['supply_voltage_channels'])
 
-#     if 'board_adc_channels' in result:
-#         print_names_in_group(result['board_adc_channels'])
+    if 'board_adc_channels' in result:
+        print_names_in_group(result['board_adc_channels'])
 
-#     if 'board_dig_in_channels' in result:
-#         print_names_in_group(result['board_dig_in_channels'])
+    if 'board_dig_in_channels' in result:
+        print_names_in_group(result['board_dig_in_channels'])
 
-#     if 'board_dig_out_channels' in result:
-#         print_names_in_group(result['board_dig_out_channels'])
+    if 'board_dig_out_channels' in result:
+        print_names_in_group(result['board_dig_out_channels'])
 
 
-# def print_names_in_group(signal_group):
-#     """Searches through all channels in this group and print them.
-#     """
-#     for this_channel in signal_group:
-#         print(this_channel['custom_channel_name'])
+def print_names_in_group(signal_group):
+    """Searches through all channels in this group and print them.
+    """
+    for this_channel in signal_group:
+        print(this_channel['custom_channel_name'])
 
 
 def find_channel_in_group(channel_name, signal_group):
@@ -201,8 +201,8 @@ def read_version_number(header, fid):
     (version['major'], version['minor']) = struct.unpack('<hh', fid.read(4))
     header['version'] = version
 
-    # print('\nReading Intan Technologies RHD Data File, Version {}.{}\n'
-    #       .format(version['major'], version['minor']))
+    print('\nReading Intan Technologies RHD Data File, Version {}.{}\n'
+          .format(version['major'], version['minor']))
 
 
 def set_num_samples_per_data_block(header):
@@ -334,7 +334,7 @@ def read_signal_summary(header, fid):
     for signal_group in range(1, number_of_signal_groups + 1):
         add_signal_group_information(header, fid, signal_group)
     add_num_channels(header)
-    # print_header_summary(header)
+    print_header_summary(header)
 
 
 def add_signal_group_information(header, fid, signal_group):
@@ -463,31 +463,31 @@ def header_to_result(header, result):
     return result
 
 
-# def print_header_summary(header):
-#     """Prints summary of contents of RHD header to console.
-#     """
-#     print('Found {} amplifier channel{}.'.format(
-#         header['num_amplifier_channels'],
-#         plural(header['num_amplifier_channels'])))
-#     print('Found {} auxiliary input channel{}.'.format(
-#         header['num_aux_input_channels'],
-#         plural(header['num_aux_input_channels'])))
-#     print('Found {} supply voltage channel{}.'.format(
-#         header['num_supply_voltage_channels'],
-#         plural(header['num_supply_voltage_channels'])))
-#     print('Found {} board ADC channel{}.'.format(
-#         header['num_board_adc_channels'],
-#         plural(header['num_board_adc_channels'])))
-#     print('Found {} board digital input channel{}.'.format(
-#         header['num_board_dig_in_channels'],
-#         plural(header['num_board_dig_in_channels'])))
-#     print('Found {} board digital output channel{}.'.format(
-#         header['num_board_dig_out_channels'],
-#         plural(header['num_board_dig_out_channels'])))
-#     print('Found {} temperature sensors channel{}.'.format(
-#         header['num_temp_sensor_channels'],
-#         plural(header['num_temp_sensor_channels'])))
-#     print('')
+def print_header_summary(header):
+    """Prints summary of contents of RHD header to console.
+    """
+    print('Found {} amplifier channel{}.'.format(
+        header['num_amplifier_channels'],
+        plural(header['num_amplifier_channels'])))
+    print('Found {} auxiliary input channel{}.'.format(
+        header['num_aux_input_channels'],
+        plural(header['num_aux_input_channels'])))
+    print('Found {} supply voltage channel{}.'.format(
+        header['num_supply_voltage_channels'],
+        plural(header['num_supply_voltage_channels'])))
+    print('Found {} board ADC channel{}.'.format(
+        header['num_board_adc_channels'],
+        plural(header['num_board_adc_channels'])))
+    print('Found {} board digital input channel{}.'.format(
+        header['num_board_dig_in_channels'],
+        plural(header['num_board_dig_in_channels'])))
+    print('Found {} board digital output channel{}.'.format(
+        header['num_board_dig_out_channels'],
+        plural(header['num_board_dig_out_channels'])))
+    print('Found {} temperature sensors channel{}.'.format(
+        header['num_temp_sensor_channels'],
+        plural(header['num_temp_sensor_channels'])))
+    print('')
 
 
 def get_timestamp_signed(header):
@@ -829,7 +829,7 @@ def read_qstring(fid):
         return ""
 
     if length > (os.fstat(fid.fileno()).st_size - fid.tell() + 1):
-        # print(length)
+        print(length)
         raise QStringError('Length too long.')
 
     # convert length from bytes to 16-bit Unicode words
@@ -870,9 +870,9 @@ def calculate_data_size(header, filename, fid):
 
     num_samples = calculate_num_samples(header, num_blocks)
 
-    # print_record_time_summary(num_samples['amplifier'],
-    #                           header['sample_rate'],
-    #                           data_present)
+    print_record_time_summary(num_samples['amplifier'],
+                              header['sample_rate'],
+                              data_present)
 
     return data_present, filesize, num_blocks, num_samples
 
@@ -892,20 +892,20 @@ def calculate_num_samples(header, num_data_blocks):
     return num_samples
 
 
-# def print_record_time_summary(num_amp_samples, sample_rate, data_present):
-#     """Prints summary of how much recorded data is present in RHD file
-#     to console.
-#     """
-#     record_time = num_amp_samples / sample_rate
+def print_record_time_summary(num_amp_samples, sample_rate, data_present):
+    """Prints summary of how much recorded data is present in RHD file
+    to console.
+    """
+    record_time = num_amp_samples / sample_rate
 
-#     if data_present:
-#         print('File contains {:0.3f} seconds of data.  '
-#               'Amplifiers were sampled at {:0.2f} kS/s.'
-#               .format(record_time, sample_rate / 1000))
-#     else:
-#         print('Header file contains no data.  '
-#               'Amplifiers were sampled at {:0.2f} kS/s.'
-#               .format(sample_rate / 1000))
+    if data_present:
+        print('File contains {:0.3f} seconds of data.  '
+              'Amplifiers were sampled at {:0.2f} kS/s.'
+              .format(record_time, sample_rate / 1000))
+    else:
+        print('Header file contains no data.  '
+              'Amplifiers were sampled at {:0.2f} kS/s.'
+              .format(sample_rate / 1000))
 
 
 def read_all_data_blocks(header, num_samples, num_blocks, fid):
@@ -913,13 +913,13 @@ def read_all_data_blocks(header, num_samples, num_blocks, fid):
     returning 'data' dict containing all data.
     """
     data, indices = initialize_memory(header, num_samples)
-    # print("Reading data from file...")
+    print("Reading data from file...")
     print_step = 10
     percent_done = print_step
     for i in range(num_blocks):
         read_one_data_block(data, header, indices, fid)
         advance_indices(indices, header['num_samples_per_data_block'])
-        # percent_done = print_progress(i, num_blocks, print_step, percent_done)
+        percent_done = print_progress(i, num_blocks, print_step, percent_done)
     return data
 
 
@@ -928,7 +928,7 @@ def initialize_memory(header, num_samples):
     during this read, and initializes unique indices for data access to each
     signal type.
     """
-    # print('\nAllocating memory for data...')
+    print('\nAllocating memory for data...')
     data = {}
 
     # Create zero array for amplifier timestamps.
@@ -1035,7 +1035,7 @@ def parse_data(header, data):
     extracting raw digital data to separate channels and scaling data to units
     like microVolts, degrees Celsius, or seconds.)
     """
-    # print('Parsing data...')
+    print('Parsing data...')
     extract_digital_data(header, data)
     scale_analog_data(header, data)
     scale_timestamps(header, data)
@@ -1047,12 +1047,12 @@ def scale_timestamps(header, data):
     # Check for gaps in timestamps.
     num_gaps = np.sum(np.not_equal(
         data['t_amplifier'][1:]-data['t_amplifier'][:-1], 1))
-    # if num_gaps == 0:
-    #     print('No missing timestamps in data.')
-    # else:
-    #     print('Warning: {0} gaps in timestamp data found.  '
-    #           'Time scale will not be uniform!'
-    #           .format(num_gaps))
+    if num_gaps == 0:
+        print('No missing timestamps in data.')
+    else:
+        print('Warning: {0} gaps in timestamp data found.  '
+              'Time scale will not be uniform!'
+              .format(num_gaps))
 
     # Scale time steps (units = seconds).
     data['t_amplifier'] = data['t_amplifier'] / header['sample_rate']
@@ -1134,7 +1134,7 @@ def apply_notch_filter(header, data):
         return
 
     # Apply notch filter individually to each channel in order
-    # print('Applying notch filter...')
+    print('Applying notch filter...')
     print_step = 10
     percent_done = print_step
     for i in range(header['num_amplifier_channels']):
@@ -1144,8 +1144,8 @@ def apply_notch_filter(header, data):
             header['notch_filter_frequency'],
             10)
 
-        # percent_done = print_progress(i, header['num_amplifier_channels'],
-        #                               print_step, percent_done)
+        percent_done = print_progress(i, header['num_amplifier_channels'],
+                                      print_step, percent_done)
 
 
 def notch_filter(signal_in, f_sample, f_notch, bandwidth):
@@ -1227,16 +1227,16 @@ def calculate_iir(i, signal_in, signal_out, iir_parameters):
     return sample
 
 
-# def print_progress(i, target, print_step, percent_done):
-#     """Prints progress of an arbitrary process based on position i / target,
-#     printing a line showing completion percentage for each print_step / 100.
-#     """
-#     fraction_done = 100 * (1.0 * i / target)
-#     if fraction_done >= percent_done:
-#         print('{}% done...'.format(percent_done))
-#         percent_done += print_step
+def print_progress(i, target, print_step, percent_done):
+    """Prints progress of an arbitrary process based on position i / target,
+    printing a line showing completion percentage for each print_step / 100.
+    """
+    fraction_done = 100 * (1.0 * i / target)
+    if fraction_done >= percent_done:
+        print('{}% done...'.format(percent_done))
+        percent_done += print_step
 
-#     return percent_done
+    return percent_done
 
 
 class UnrecognizedFileError(Exception):

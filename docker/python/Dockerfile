@@ -39,9 +39,10 @@ RUN mkdir --parents /build/bin
 # copy src code to user
 COPY --chown=${SC_USER_NAME}:${SC_USER_NAME} src/datawave src/datawave
 
-## install the reuirements
-RUN pip --no-cache --quiet install --upgrade pip && \
-    pip install -r src/datawave/requirements.txt
+## install the reuirements moved to execute.sh
+RUN pip --no-cache --quiet install --upgrade pip 
+# && \
+#     pip install -r src/datawave/requirements.txt
 
 
 
@@ -67,7 +68,7 @@ ENV INPUT_FOLDER="/input" \
 
 WORKDIR /home/${SC_USER_NAME}
 
-# copy lib for python packages and the src files containing my code
+# copy lib for python packages and the src files containing my code- removed and moved installation to execute
 COPY --from=build --chown=${SC_USER_NAME}:${SC_USER_NAME} /usr/local/lib /usr/local/lib
 
 COPY --from=build --chown=${SC_USER_NAME}:${SC_USER_NAME} /build/src/datawave /home/${SC_USER_NAME}/datawave

@@ -3,7 +3,5 @@ numpy
 argparse
 matplotlib
 scipy
-regex
 h5py
 pynwb==2.0.0
-neuroconv

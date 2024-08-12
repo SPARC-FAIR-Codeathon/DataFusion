@@ -37,7 +37,7 @@ analysis_py_folder=$(find "${INPUT_FOLDER}" -type d -name "analysis_py")
 
 if [ -d "$analysis_py_folder" ]; then
     echo "Folder found: $analysis_py_folder"
-    cp "analysis_py" .
+    cp -r "$analysis_py_folder" .
 else
     echo "Folder named analysis_py not found. Creating it..."
     mkdir -p "analysis_py"
@@ -71,6 +71,35 @@ fi
 echo "Starting data retrieval"
 mkdir "extra_derived_files" # to store extra files such as nwb file
 
+# Create a virtual environment
+echo "Creating virtual environment..."
+python3 -m venv venv
+
+# Activate the virtual environment
+echo "Activating virtual environment..."
+# shellcheck source=/dev/null
+. venv/bin/activate
+
+# Install necessary pip packages
+echo "Installing necessary pip packages..."
+pip install --upgrade pip
+
+echo "Setting virtual environment permissions..."
+chmod -R u+rwx venv
+
+# Check if the file extension is rhd and prompt to install neuroconv
+if [ "${dat_filen##*.}" = "rhd" ]; then
+    echo "File extension is .rhd. neuroconv is required for processing."
+    echo "Installing requirements...it will take some time"
+    pip --quiet install -r requirements_rhd.txt
+
+
+else
+    echo "Installing requirements...it will take some time"
+    pip --quiet install -r requirements.txt
+fi
+echo "Successfully installed"
+
 python3 main.py  \
   -d "$dat_filen" \
   -p "analysis_py" \
@@ -79,5 +108,5 @@ python3 main.py  \
 echo "Analysis and retrieval completed successfully, adding it to the output..."
 # Add derived_files to output
 
-zip -rj -FS "${OUTPUT_FOLDER}/derived_files.zip" "derived_file.csv" "extra_derived_files" "derived_analysis.zip"
+zip -rj -FS "${OUTPUT_FOLDER}/derived_files.zip" "derived_file.csv" "extra_derived_files" "derived_analysis"
 

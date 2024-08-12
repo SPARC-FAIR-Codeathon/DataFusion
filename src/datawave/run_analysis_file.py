@@ -3,12 +3,25 @@ import os
 import shutil
 import subprocess
 import sys
+import venv
+
+def create_virtualenv(env_name):
+    venv.create(env_name, with_pip=True)
+    env_path = os.path.join(os.getcwd(), env_name)
+    return env_path
 
 
-def install_packages(requirements_file):
+def activate_virtualenv(env_path):
+    activate_script = os.path.join(env_path, 'bin', 'activate')
+    activate_command = f'source {activate_script}'
+    return activate_command
+
+
+def install_packages(requirements_file, env_path):
+    activate_command = activate_virtualenv(env_path)
     try:
         print("Installing packages...")
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", requirements_file])
+        subprocess.check_call([sys.executable, "-m", "pip", "--quiet" ,"install", "-r", requirements_file])
     except subprocess.CalledProcessError as e:
         print(f"Error occurred while installing packages: {e}")
         return False
@@ -16,14 +29,10 @@ def install_packages(requirements_file):
 
 
 def run_target_script(script_path, df_file):
+    import analysis
     try:
-        result = subprocess.run(['python', script_path, df_file], capture_output=True, text=True)
-        print("Output:")
-        print(result.stdout)
-        if result.stderr:
-            print("Errors:")
-            print(result.stderr)
-        return result.returncode == 0
+        analysis.run_analysis(df_file)
+        
     except Exception as e:
         print(f"An error occurred while running the target script: {e}")
         return False
@@ -55,10 +64,13 @@ def run(source_folder, df):
     requirements_file = 'requirements_analysis.txt'
     target_script_path = 'analysis.py'
 
+    env_name = 'ana_venv'
+    env_path = create_virtualenv(env_name)
+
     if os.path.isfile(requirements_file):
-        pckg_status = install_packages(requirements_file)
+        pckg_status = install_packages(requirements_file, env_path)
 
     # Run the target script
     if os.path.isfile(target_script_path):
-        run_target_script(target_script_path, df):
+        run_target_script(target_script_path, df)
 

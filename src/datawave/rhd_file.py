@@ -6,6 +6,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 from neuroconv.datainterfaces import IntanRecordingInterface
 import shutil
+import os
 
 class ChannelNotFoundError(Exception):
     pass
@@ -66,6 +67,12 @@ def channel_to_dataframe(channel_name, result):
 def run(filename):
     result, data_present = rhdutils.load_file(filename)
 
+    # keys_list = list(result.keys())
+    # command = f"echo {keys_list}"
+    # os.system(command)
+
+    # os.system("echo something something")
+
     df_list = []
 
     # Check if 'aux_input_channels' exists in result before processing
@@ -73,9 +80,8 @@ def run(filename):
         for chan in result["aux_input_channels"]:
             df_list.append(channel_to_dataframe(chan["native_channel_name"], result))
 
-    ## no implemented to save
-
-    # # Check if 'amplifier_channels' exists in result before processing
+    ## commented out to save memory
+    # Check if 'amplifier_channels' exists in result before processing
     # if "amplifier_channels" in result.keys():
     #     for chan in result["amplifier_channels"]:
     #         df_list.append(channel_to_dataframe(chan["native_channel_name"], result))
@@ -91,8 +97,9 @@ def run(filename):
     #         df_list.append(channel_to_dataframe(chan["native_channel_name"], result))
 
     df = pd.concat(df_list)
+    return df
 
-## todo
+
 def rhd_to_nwb (filename):
 
     interface = IntanRecordingInterface(file_path=filename, verbose=False)
@@ -103,8 +110,8 @@ def rhd_to_nwb (filename):
     # automatically from the source files you must supply one.
     session_start_time = datetime(2020, 1, 1, 12, 30, 0, tzinfo=ZoneInfo("US/Pacific"))
     metadata["NWBFile"].update(session_start_time=session_start_time)
-    nwbfile_path = 'derived_file.nwb'
+    nwbfile_path = 'converted.nwb'
     interface.run_conversion(nwbfile_path=nwbfile_path, metadata=metadata)
-    shutil.move("converted.h5", "extra_derived_files")
+    shutil.move("converted.nwb", "extra_derived_files")
 
 

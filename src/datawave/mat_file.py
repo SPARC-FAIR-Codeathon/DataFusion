@@ -1,6 +1,6 @@
 import scipy.io
 import numpy as np
-import subprocess
+import os
 import shutil
 
 def process_mat_file(mat, field_name_dictionary):
@@ -43,14 +43,16 @@ def process_mat_file(mat, field_name_dictionary):
             return None, None
 
 
-def add_other_labels(mat_file, field_name_dictionary, df):
+def add_other_labels(data_file, field_name_dictionary, df):
+
     if field_name_dictionary:  ## only proceed if it is not empty
+        mat = scipy.io.loadmat(data_file) 
         exclude = {"Time stamps", "Time Series", "Sampling Frequency"}
-        filtered_dict = {k: v for k, v in field_name_dictionary.items() if k not in exclude}
+        filtered_dict = {k: v for k, v in mat.items() if k not in exclude}
         if filtered_dict:  ## only proceed if it is not empty
-            for key in filtered_dict:
-                if len(df) == len(mat_file[key]):
-                    df[key] = mat_file[key]
+            for key in filtered_dict:            
+                if len(df) == len(mat[key]):
+                    df[key] = mat[key]
 
     return df
 
@@ -62,8 +64,8 @@ def read_mat(data_file, field_name_dictionary):
 
 def convert_mat_to_h5(data_file):
     command = f"python3 mat2h5.py {data_file}"
-    result = subprocess.run(command, shell=True, capture_output=True, text=True)
-
+    os.system(command)
+    
     # move file
     shutil.move("converted.h5", "extra_derived_files")
 
