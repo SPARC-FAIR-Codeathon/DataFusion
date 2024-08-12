@@ -1,6 +1,7 @@
 import scipy.io
 import numpy as np
-
+import subprocess
+import shutil
 
 def process_mat_file(mat, field_name_dictionary):
     if "Time Series" in field_name_dictionary.keys():
@@ -39,14 +40,31 @@ def process_mat_file(mat, field_name_dictionary):
             return series, time_data
 
         else:
-            raise ValueError("Required fields are not present in the .mat file")
+            return None, None
+
+
+def add_other_labels(mat_file, field_name_dictionary, df):
+    if field_name_dictionary:  ## only proceed if it is not empty
+        exclude = {"Time stamps", "Time Series", "Sampling Frequency"}
+        filtered_dict = {k: v for k, v in field_name_dictionary.items() if k not in exclude}
+        if filtered_dict:  ## only proceed if it is not empty
+            for key in filtered_dict:
+                if len(df) == len(mat_file[key]):
+                    df[key] = mat_file[key]
+
+    return df
 
 
 def read_mat(data_file, field_name_dictionary):
     mat = scipy.io.loadmat(data_file)
     return process_mat_file(mat, field_name_dictionary)
 
-# def plot_time_series(series, time_data):
-#     plt.plot(time_data, series)
 
-# plot_time_series(series[0, :1000], time_data[0,:1000])
+def convert_mat_to_h5(data_file):
+    command = f"python3 mat2h5.py {data_file}"
+    result = subprocess.run(command, shell=True, capture_output=True, text=True)
+
+    # move file
+    shutil.move("converted.h5", "extra_derived_files")
+
+
