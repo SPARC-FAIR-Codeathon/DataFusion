@@ -4,7 +4,7 @@
 
 ## Introduction
 ### Accessing Datasets on SPARC: Simplifying the Process
-Accessing datasets on SPARC can be a daunting task due to the multitude of available file formats. The SPARC portal hosts an abundance of time-series datasets, such as EMG, EEG, ECG, urodynamics, manometry, and more. These datasets, besides being immensely useful for novel analysis or replciation, present an opportunity for the training of sequence prediction and generation models, such as transformers, MAMBA, and RKWV, which have seen immense success in large language modeling.
+Accessing datasets on SPARC can be a daunting task due to the multitude of available file formats. The SPARC portal hosts an abundance of time-series datasets, such as EMG, EEG, ECG, urodynamics, manometry, and more. These datasets, besides being immensely useful for novel analysis or replication, present an opportunity for the training of sequence prediction and generation models, such as transformers, MAMBA, and RKWV, which have seen immense success in large language modeling.
 However, the accessibility of these datasets is a significant bottleneck in the research process. The various formats available, such as `.adicht`, `.rhd`, `.mat`, and others, require different libraries for any analysis.
 To address this issue, we present a versatile cloud solution that can be deployed on SPARC's o<sup>2</sup>S<sup>2</sup>PARC platform. This solution provides users with a simple way to perform preliminary analysis on any time-series dataset of their choice.
 
