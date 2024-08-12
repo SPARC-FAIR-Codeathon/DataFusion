@@ -65,7 +65,7 @@ def run_analysis(filename):  ## if using converted file, use this
     # Convert labels to tensor
     y_tensor = torch.tensor(y, dtype=torch.long)
     
-    num_folds = 5
+    num_folds = 2
     results = []
     folds = cross_validation_split(X_scaled, y_tensor, num_folds)
 
@@ -124,7 +124,7 @@ def run_analysis(filename):  ## if using converted file, use this
 
     ### Move all your files #### 
     command = "mkdir derived_analysis"
-    os.system(command, shell=True, check=True)    
+    os.system(command)    
 
     shutil.move("rnn_cross_validation_results.csv", "derived_analysis")  ## Do not change the destination
     shutil.move("rnn_model_fold_5.pth", "derived_analysis")  ## Do not change the destination

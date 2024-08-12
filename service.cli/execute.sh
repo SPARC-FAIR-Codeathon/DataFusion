@@ -18,16 +18,22 @@ echo
 
 # Copy input data file
 echo "Getting data file from input_1..."
-num_datafile=$(find "${INPUT_FOLDER}" \( -type f -name "*.mat" -o -name "*.txt" -o -name "*.rhd" -o -name "*.adicht" -o -name "*.nwb" \) | wc -l)
+# Count the number of data files (including CSV files)
+num_datafile=$(find "${INPUT_FOLDER}" -maxdepth 1 \( -type f -name "*.mat" -o -name "*.txt" -o -name "*.rhd" -o -name "*.adicht" -o -name "*.nwb" -o -name "*.csv" \) | wc -l)
 
-if [ "$num_datafile" = 1 ]; then
-    filen="$(find "${INPUT_FOLDER}" \( -type f -name "*.mat" -o -name "*.txt" -o -name "*.rhd" -o -name "*.adicht" -o -name "*.nwb" \))"
+if [ "$num_datafile" -eq 1 ]; then
+    filen="$(find "${INPUT_FOLDER}" -maxdepth 1 \( -type f -name "*.mat" -o -name "*.txt" -o -name "*.rhd" -o -name "*.adicht" -o -name "*.nwb" -o -name "*.csv" \))"
     cp "$filen" .
     dat_filen="$(basename "${filen}")"
-else
+    echo "Data file copied: $dat_filen"
+elif [ "$num_datafile" -gt 1 ]; then
     echo "Please provide only one data file"
     exit 1
+else
+    echo "No data file found"
+    exit 1
 fi
+
 
 
 echo "Finding the analysis_py folder..."
@@ -99,7 +105,6 @@ else
     pip --quiet install -r requirements.txt
 fi
 echo "Successfully installed"
-
 python3 main.py  \
   -d "$dat_filen" \
   -p "analysis_py" \
