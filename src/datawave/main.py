@@ -37,9 +37,13 @@ data_file_ext = os.path.splitext(data_file)[1].lower()
 if data_file_ext not in supported_ext:
     raise ValueError(f"Unsupported data file extension: {data_file_ext}")
 
-field_name_dict = read_json(json_file)
-get_final_df = get_data.run(data_file_ext, data_file, field_name_dict)
+try:
+    field_name_dict = read_json(json_file)
+except Exception as e:
+    print(f"No json file found: {e}")
+    field_name_dict = {}
 
+get_final_df = get_data.run(data_file_ext, data_file, field_name_dict)
 
 # Save the DataFrame to a CSV file
 csv_file_path = f"derived_file.csv"
