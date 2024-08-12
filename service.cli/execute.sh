@@ -46,17 +46,19 @@ fi
 echo "Getting Json file from input_3..."
 num_jsonfile=$(find "${INPUT_FOLDER}" \( -type f -name "*.json" \) | wc -l)
 
-if [ "$num_jsonfile" = 1 ]; then
+if [ "$num_jsonfile" -eq 1 ]; then
     filen="$(find "${INPUT_FOLDER}" \( -type f -name "*.json" \))"
     cp "$filen" .
     json_filen="$(basename "${filen}")"
+elif [ "$num_jsonfile" -eq 0 ]; then
+    echo "No JSON file found. Creating an empty JSON file."
+    echo "{}" > empty.json
+    json_filen="empty.json"
 else
     echo "Please provide only one json file"
     exit 1
 fi
 
-
-f_path="$filen"
 
 # put the code to execute the service here
 # For example:
@@ -65,6 +67,7 @@ f_path="$filen"
 
 # Launch data retrieval and analysis
 echo "Starting data retrieval"
+mkdir "extra_derived_files" # to store extra files such as nwb file
 
 python3 main.py  \
   -d "$dat_filen" \
@@ -74,7 +77,5 @@ python3 main.py  \
 echo "Analysis and retrieval completed successfully, adding it to the output..."
 # Add derived_files to output
 
-zip -rj -FS "${OUTPUT_FOLDER}/derived_files.zip" "derived_file.csv" "derived_sample_plot.png" "dervied_analysis_plot.zip"
-
-
+zip -rj -FS "${OUTPUT_FOLDER}/derived_files.zip" "derived_file.csv" "extra_derived_files" "dervied_analysis_plot.zip"
 
