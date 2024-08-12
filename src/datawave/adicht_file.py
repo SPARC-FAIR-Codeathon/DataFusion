@@ -1,3 +1,6 @@
+## not implemented because adi-reader is not available for linux
+## TODO: Add implementation in future
+
 import adi
 import numpy as np
 
