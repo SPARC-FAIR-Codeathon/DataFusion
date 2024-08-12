@@ -30,22 +30,23 @@ def run_target_script(script_path, df_file):
 
 
 def copy_files(source_folder):
-    files = ['requirements.txt', 'target_script.py']
+    # files = ['requirements_analysis.txt', 'analysis.py']
+    files = os.listdir(source_folder)
     for file_name in files:
         src = os.path.join(source_folder, file_name)
         dst = os.path.join(os.getcwd(), file_name)
         if os.path.isfile(src):
             print(f"Copying {file_name} from {source_folder} to {os.getcwd()}")
-            shutil.copy(src, dst)
+            shutil.move(src, dst)
         else:
             print(f"{file_name} not found in {source_folder}")
 
 
 def run(source_folder, df):
 
-    # Check if the source folder exists
-    if not os.path.isdir(source_folder):
-        print("Source folder not found.")
+    # Check if the source folder is empty
+    if not os.listdir(source_folder):
+        print("Source folder is empty.")
         return None
 
     # Copy files from the source folder to the current working directory
@@ -55,12 +56,9 @@ def run(source_folder, df):
     target_script_path = 'analysis.py'
 
     if os.path.isfile(requirements_file):
-        # Install required packages
-        if not install_packages(requirements_file):
-            sys.exit(1)
-
+        pckg_status = install_packages(requirements_file)
 
     # Run the target script
-    if not run_target_script(target_script_path, df):
-        print("Failed to run the target script.")
-        sys.exit(1)
+    if os.path.isfile(target_script_path):
+        run_target_script(target_script_path, df):
+
