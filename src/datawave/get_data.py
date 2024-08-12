@@ -1,7 +1,7 @@
 import os
 import utils
 import mat_file
-import adicht_file
+#import adicht_file
 import rhd_file
 
 def run(data_file_ext, data_file, field_name_dictionary):
