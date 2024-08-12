@@ -30,16 +30,17 @@ else
 fi
 
 
-echo "Getting Python file from input_2..."
-num_pyfile=$(find "${INPUT_FOLDER}" \( -type f -name "*.py" \) | wc -l)
+echo "Finding the analysis_py folder..."
 
-if [ "$num_pyfile" = 1 ]; then
-    filen="$(find "${INPUT_FOLDER}" \( -type f -name "*.py" \))"
-    cp "$filen" .
-    analysis_filen="$(basename "${filen}")"
+# Find the folder named analysis_py
+analysis_py_folder=$(find "${INPUT_FOLDER}" -type d -name "analysis_py")
+
+if [ -d "$analysis_py_folder" ]; then
+    echo "Folder found: $analysis_py_folder"
 else
-    echo "Please provide only one Python file"
-    exit 1
+    echo "Folder named analysis_py not found. Creating it..."
+    mkdir -p "${INPUT_FOLDER}/analysis_py"
+    echo "Folder created: ${INPUT_FOLDER}/analysis_py"
 fi
 
 
@@ -71,7 +72,7 @@ mkdir "extra_derived_files" # to store extra files such as nwb file
 
 python3 main.py  \
   -d "$dat_filen" \
-  -p "$analysis_filen" \
+  -p "analysis_py" \
   -j "$json_filen" 
 
 echo "Analysis and retrieval completed successfully, adding it to the output..."
