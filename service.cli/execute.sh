@@ -37,10 +37,11 @@ analysis_py_folder=$(find "${INPUT_FOLDER}" -type d -name "analysis_py")
 
 if [ -d "$analysis_py_folder" ]; then
     echo "Folder found: $analysis_py_folder"
+    cp "analysis_py" .
 else
     echo "Folder named analysis_py not found. Creating it..."
-    mkdir -p "${INPUT_FOLDER}/analysis_py"
-    echo "Folder created: ${INPUT_FOLDER}/analysis_py"
+    mkdir -p "analysis_py"
+    echo "Folder created: analysis_py"
 fi
 
 
@@ -78,5 +79,5 @@ python3 main.py  \
 echo "Analysis and retrieval completed successfully, adding it to the output..."
 # Add derived_files to output
 
-zip -rj -FS "${OUTPUT_FOLDER}/derived_files.zip" "derived_file.csv" "extra_derived_files" "dervied_analysis.zip"
+zip -rj -FS "${OUTPUT_FOLDER}/derived_files.zip" "derived_file.csv" "extra_derived_files" "derived_analysis.zip"
 
