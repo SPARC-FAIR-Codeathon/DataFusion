@@ -3,4 +3,5 @@ numpy
 argparse
 matplotlib
 scipy
-
+regex
+h5py
