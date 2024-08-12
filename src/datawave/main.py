@@ -16,14 +16,14 @@ parser = argparse.ArgumentParser(description='Data retrieval and analysis.')
 
 # Separate flags for each type of input
 parser.add_argument('--data-file', '-d', required=True, help='File name to the data file (e.g., .mat, .nwb, .txt).')
-parser.add_argument('--python-file', '-p', required=False, help='File name to the Python file for custom processing.')
+parser.add_argument('--analysis-folder', '-p', required=False, help='File name to the Python file for custom processing.')
 parser.add_argument('--json-file', '-j', required=False, help='File name to the JSON configuration file.')
 
 args = parser.parse_args()
 
 # Input files
 data_file = args.data_file
-python_file = args.python_file
+python_file = args.analysis_folder
 json_file = args.json_file
 
 
