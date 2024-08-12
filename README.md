@@ -10,7 +10,7 @@ To address this issue, we present a versatile cloud solution that can be deploye
 
 
 ## Solution
-**DataFusion Service** is a versatile and scalable solution designed to convert various file formats into a common CSV format. It also supports the conversion of neuroscience datasets, such as Intan \*.rhd files, into the NWB (Neuroscience Without Borders) format. NWB is also built on the principles of FAIR (Findable, Accessible, Interoperable, and Reusable), empowering neuroscientists worldwide to perform analyses on datasets prepared by other laboratories.
+**DataFusion Service** is a versatile and scalable solution designed to convert various file formats into a common CSV format. CSV is a human-readable file unlike other file formats occasionally used to store time series data, enabling almost everybody (especially those who don't know how to code) to see the data quickly and if required use it to plot with Excel or Google Sheets. It also supports the conversion of neuroscience datasets, such as Intan \*.rhd files, into the NWB (Neuroscience Without Borders) format. NWB is also built on the principles of FAIR (Findable, Accessible, Interoperable, and Reusable), empowering neuroscientists worldwide to perform analyses on datasets prepared by other laboratories.
 Users can upload their preferred datasets or directly access them using PENSIEVE or a URL from SPARC datasets. These can be used in tandem with a file picker service. To further support users in performing preliminary analyses, such as training a neural network decoder or visualizing the dynamics of any variable as it evolves over time, users can upload a Python script along with the necessary requirements to run their code. This can be done for their original file or the converted \*.csv file (`pandas DataFrame`).
 Finally, the outputs, including NWB, CSV, and analysis result files, are stored in an output folder available for download.
 
@@ -20,8 +20,8 @@ The service is currently available as a Docker container. In the future, it can 
 
 1. **Clone the repository**
     ```bash
-    $ git clone 
-    $ cd 
+    $ git clone https://github.com/SPARC-FAIR-Codeathon/DataFusion.git
+    $ cd DataFusion
     ```
 
 2. **Build the Docker image**
@@ -78,7 +78,7 @@ Follow these steps, to run the analysis code and achieve the desired results.
 
 
 ## Demo files 
-To show  various use case scenarios, we have created demo input and output files. After building the Docker image, you can run the following commands:
+To show  various use case scenarios, we have created demo input and output files. To use demo commands, download the [demos](https://drive.google.com/drive/folders/1SuU7rR7E7a27oN3rO2_Ob6GTzeBv8L-c?usp=drive_link) files (from team drive folder) and add it to DataFusion directory. After building the Docker image, you can run the following commands:
 
 1. **For MAT file format**
 
