@@ -77,5 +77,5 @@ python3 main.py  \
 echo "Analysis and retrieval completed successfully, adding it to the output..."
 # Add derived_files to output
 
-zip -rj -FS "${OUTPUT_FOLDER}/derived_files.zip" "derived_file.csv" "extra_derived_files" "dervied_analysis_plot.zip"
+zip -rj -FS "${OUTPUT_FOLDER}/derived_files.zip" "derived_file.csv" "extra_derived_files" "dervied_analysis.zip"
 
