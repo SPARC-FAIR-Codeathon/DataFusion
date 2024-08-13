@@ -94,7 +94,7 @@ To show  various use case scenarios, we have created demo input and output files
     docker run --mount type=bind,source=./demos/input/MatDataset,target=/input --mount type=bind,source=./demos/output/MatDataset,target=/output docker_img
     ```
 
-    This command converts MAT files (accessed from SPARC Dataset [375]([https://sparc.science/datasets/375?type=dataset&datasetDetailsTab=about&path=files/primary/sub-DP8/perf-DP8-random-patterns](https://sparc.science/datasets/375?type=dataset&datasetDetailsTab=about&path=files/primary/sub-DP8/perf-DP8-random-patterns)) to CSV and H5 formats (a precursor to NWB) and stores them in a zip folder. Note that it is important to provide a JSON file with field names along with the data file. Currently, the process requires this JSON file, but we believe that a smarter solution can be created in the future where field names might not be necessary. Additionally, you can include labels (e.g., for training a decoder or classifier) in the JSON file alongside the "Time Series" and "Time Stamps" fields.
+    This command converts MAT files (accessed from SPARC Dataset [375](https://sparc.science/datasets/375?type=dataset&datasetDetailsTab=about&path=files/primary/sub-DP8/perf-DP8-random-patterns) to CSV and H5 formats (a precursor to NWB) and stores them in a zip folder. Note that it is important to provide a JSON file with field names along with the data file. Currently, the process requires this JSON file, but we believe that a smarter solution can be created in the future where field names might not be necessary. Additionally, you can include labels (e.g., for training a decoder or classifier) in the JSON file alongside the "Time Series" and "Time Stamps" fields.
 
 2. **For RHD file format**
 
@@ -102,7 +102,7 @@ To show  various use case scenarios, we have created demo input and output files
     docker run --mount type=bind,source=./demos/input/RhdDataset,target=/input --mount type=bind,source=./demos/output/RhdDataset,target=/output docker_img
     ```
 
-    This command converts Intan RHD files (a neurophysiology format) (accessed from SPARC Dataset [316]([https://sparc.science/datasets/316?type=dataset&datasetDetailsTab=files&path=files/primary/sub-VN010720/perf-01-09-20-baseline](https://sparc.science/datasets/316?type=dataset&datasetDetailsTab=files&path=files/primary/sub-VN010720/perf-01-09-20-baseline)) to CSV and NWB formats. No JSON file is required for this conversion.
+    This command converts Intan RHD files (a neurophysiology format) (accessed from SPARC Dataset [316](https://sparc.science/datasets/316?type=dataset&datasetDetailsTab=files&path=files/primary/sub-VN010720/perf-01-09-20-baseline) to CSV and NWB formats. No JSON file is required for this conversion.
 
 3. **For direct CSV format**
 
@@ -133,6 +133,7 @@ Steps followed in the production process-
 3.  [execute.sh](https://github.com/SPARC-FAIR-Codeathon/DataFusion/blob/main/service.cli/execute.sh) was developed to run custom defined python scripts.
 4.  Custom Python scripts to do the conversion and run the user-defined analysis file was added to [src](https://github.com/SPARC-FAIR-Codeathon/DataFusion/tree/main/src).
 5.  To validate and test the usability, example input and output files were added to [validation](https://github.com/SPARC-FAIR-Codeathon/DataFusion/tree/main/validation)
+6.  A summary of the backend Python scripts is given [here](https://github.com/SPARC-FAIR-Codeathon/DataFusion/tree/main/src/datawave#readme).
 
 
 ## Strengths and FAIR principle alignment
