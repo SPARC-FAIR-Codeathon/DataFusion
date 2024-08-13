@@ -43,9 +43,17 @@ The service is currently available as a Docker container. In the future, it can 
 
     If this command runs without errors, the service is functioning correctly. Note that warnings may appear during this process; these are expected.
 
-4. **Troubleshooting**
+4. **Input your files or run demos**
+   To run demos refer to this. To run your input files, use the following command after building the image.
+   
+    ```bash
+    $ docker run --mount type=bind,source=<input_file_path>,target=/input --mount type=bind,source=<output_file_path>,target=/output data_fusion_img
+    ```
+    
+6. **Troubleshooting**
 
     If the command does not work, ensure that the Docker daemon is running. Else report issues.
+
 
 
 #### How to run analysis code?
