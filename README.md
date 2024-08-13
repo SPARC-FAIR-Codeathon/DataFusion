@@ -3,7 +3,7 @@
 
 
 ### Dataset & Study Design Problems
-In neuroscience, there are a large number of different data file formats that contain a high degree of deviation in datasets from data collection to data storage and thus, difficult for results’ reproducibility. This also leads to weak or no scientific collaborations at all. Moreover, due to the lack of access to the required resources, it is also very challenging to choose and use publically available datasets. Furthermore, various formats available, such as  `.rhd`, `.mat`, and others, require different libraries for any analysis.
+In neuroscience, a large number of different data file formats are available that contain a high degree of deviation in datasets from data collection to data storage and thus, difficult for results’ reproducibility. This also leads to weak or no scientific collaborations at all. Moreover, due to the lack of access to the required resources, it is also very challenging to choose and use publically available datasets. Furthermore, various formats available, such as  `.rhd`, `.mat`, and others, require different libraries for any analysis.
 
 ### Motivation Behind DataFusion
 DataFusion has been developed to bridge the gap among the stakeholders of neuroscience by Findable, accessible, interoperable, and reusable (FAIR) data principles and utilizing the common standardized file format - neurodata without borders (NWB). DataFusion also promotes hypothesis-driven studies to SPARC’s users who can choose the right dataset for their study by harnessing the potential of our preliminary analyses pipeline.
