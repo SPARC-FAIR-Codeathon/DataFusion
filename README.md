@@ -117,7 +117,7 @@ To show  various use case scenarios, we have created demo input and output files
     docker run --mount type=bind,source=./demos/input/CsvDataset,target=/input --mount type=bind,source=./demos/output/CsvDataset,target=/output docker_img
     ```
 
-    This command processes a toy dataset created using a [Python script](https://github.com/SPARC-FAIR-Codeathon/DataFusion/blob/main/misc/make_toy_data.py). It runs an analysis code on the CSV file to train a TensorFlow model and saves the results of the 5-fold cross-validation as a CSV file and the model file for one of the folds as an H5 file in the zip output folder.
+    This command processes a toy dataset created using a [Python script](https://github.com/SPARC-FAIR-Codeathon/DataFusion/blob/main/misc/make_toy_data.py). It runs an analysis code on the CSV file to train a Pytorch model and saves the results of the 5-fold cross-validation as a CSV file and the model file for one of the folds as an H5 file in the zip output folder.
 
 ____
 ## Currently Supported Conversions
