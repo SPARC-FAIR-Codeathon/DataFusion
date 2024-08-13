@@ -1,21 +1,21 @@
 # DataFusion
 
-**A versatile multi-purpose o<sup>2</sup>S<sup>2</sup>PARC service to convert different file formats (such as *.mat and *.rhd) to a common format and to run preliminary analysis on different input formats**
+**An o<sup>2</sup>S<sup>2</sup>PARC service to enhance the usability of SPARC by converting multiple SPARC’s public dataset file formats (or others) (such as \*.mat and \*.rhd) to common format (\*.nwb) and facilitating hypothesis-driven studies by allowing preliminary analyses.**
 
 ## Introduction
 ### Accessing Datasets on SPARC: Simplifying the Process
-Accessing datasets on SPARC can be a daunting task due to the multitude of available file formats. The SPARC portal hosts an abundance of time-series datasets, such as EMG, EEG, ECG, urodynamics, manometry, and more. These datasets, besides being immensely useful for novel analysis or replication, present an opportunity for the training of sequence prediction and generation models, such as transformers, MAMBA, and RKWV, which have seen immense success in large language modeling.
+Accessing datasets on Stimulating Peripheral Activity to Relieve Conditions (SPARC) can be a daunting task due to the multitude of available file formats. The SPARC portal hosts an abundance of time-series datasets, such as electroencephalography (EEG), electrocardiography (ECG), electromyography (EMG), urodynamics, manometry, and more. These datasets, besides being immensely useful for novel analysis or replication, present an opportunity for the training of sequence prediction and generation models, such as transformers, MAMBA, and RKWV, which have seen immense success in large language modeling.
 However, the accessibility of these datasets is a significant bottleneck in the research process. The various formats available, such as `.adicht`, `.rhd`, `.mat`, and others, require different libraries for any analysis.
 To address this issue, we present a versatile cloud solution that can be deployed on SPARC's o<sup>2</sup>S<sup>2</sup>PARC platform. This solution provides users with a simple way to perform preliminary analysis on any time-series dataset of their choice.
 
-
 ## Solution
+**TL;DR:** We present a service with two functions that can be used standalone or in collaboration- 1) Conversion of different formats to a common format 2) Run user-defined analysis scripts
 **DataFusion Service** is a versatile and scalable solution designed to convert various file formats into a common CSV format. CSV is a human-readable file unlike other file formats occasionally used to store time series data, enabling almost everybody (especially those who don't know how to code) to see the data quickly and if required use it to plot with Excel or Google Sheets. It also supports the conversion of neuroscience datasets, such as Intan \*.rhd files, into the NWB (Neuroscience Without Borders) format. NWB is also built on the principles of FAIR (Findable, Accessible, Interoperable, and Reusable), empowering neuroscientists worldwide to perform analyses on datasets prepared by other laboratories.
 Users can upload their preferred datasets or directly access them using PENSIEVE or a URL from SPARC datasets. These can be used in tandem with a file picker service. To further support users in performing preliminary analyses, such as training a neural network decoder or visualizing the dynamics of any variable as it evolves over time, users can upload a Python script along with the necessary requirements to run their code. This can be done for their original file or the converted \*.csv file (`pandas DataFrame`).
 Finally, the outputs, including NWB, CSV, and analysis result files, are stored in an output folder available for download.
 
 ## How to use?
-#### Service Deployment Instructions
+#### DataFusion Deployment - A step-by-step instructions guide
 The service is currently available as a Docker container. In the future, it can be uploaded directly to o<sup>2</sup>S<sup>2</sup>PARC, as it is built using `cookiecutter-osparc-service`. To use it, follow these steps:
 
 1. **Clone the repository**
@@ -44,7 +44,7 @@ The service is currently available as a Docker container. In the future, it can 
     If this command runs without errors, the service is functioning correctly. Note that warnings may appear during this process; these are expected.
 
 4. **Input your files or run demos**
-   To run demos refer to this. To run your input files, use the following command after building the image.
+   To run demos refer to [this](#Demo-files). To run your/user defined input files, use the following command after building the image. Add your filepaths in the defined placeholder.
    
     ```bash
     $ docker run --mount type=bind,source=<input_file_path>,target=/input --mount type=bind,source=<output_file_path>,target=/output data_fusion_img
@@ -67,7 +67,6 @@ To run the analysis code effectively, follow these guidelines:
 
 **Please note that currently, this service supports the use of only `python3.9`. Ensure that your script and dependencies are compatible with Python 3.9 when using this service.**
 
-
 3. **Prepare Your Analysis Script**:
    Include an `analysis.py` file in the `analysis_py` directory. Make sure to adhere to the provided template for the script. 
    
@@ -77,7 +76,7 @@ To run the analysis code effectively, follow these guidelines:
    You can reference either the uploaded data file or its converted CSV version (read as a pandas DataFrame) in your analysis script.
 
 5. **Analysis Capabilities**:
-   You can perform a wide range of tasks, including plotting figures, training a network, and leveraging cloud computing for model execution. Possibilities are endless.
+   You can perform a wide range of tasks, including plotting figures, training a network, and leveraging cloud computing for model inference. The possibilities are endless.
 
 6. **CUDA Support**:
    Note that CUDA is currently supported and may be included in future updates.
@@ -94,7 +93,7 @@ To show  various use case scenarios, we have created demo input and output files
     docker run --mount type=bind,source=./demos/input/MatDataset,target=/input --mount type=bind,source=./demos/output/MatDataset,target=/output docker_img
     ```
 
-    This command converts MAT files to CSV and H5 formats (a precursor to NWB) and stores them in a zip folder. Note that it is important to provide a JSON file with field names along with the data file. Currently, the process requires this JSON file, but we believe that a smarter solution can be created in the future where field names might not be necessary. Additionally, you can include labels (e.g., for training a decoder or classifier) in the JSON file alongside the "Time Series" and "Time Stamps" fields.
+    This command converts MAT files (accessed from SPARC Dataset [375]([https://sparc.science/datasets/375?type=dataset&datasetDetailsTab=about&path=files/primary/sub-DP8/perf-DP8-random-patterns](https://sparc.science/datasets/375?type=dataset&datasetDetailsTab=about&path=files/primary/sub-DP8/perf-DP8-random-patterns)) to CSV and H5 formats (a precursor to NWB) and stores them in a zip folder. Note that it is important to provide a JSON file with field names along with the data file. Currently, the process requires this JSON file, but we believe that a smarter solution can be created in the future where field names might not be necessary. Additionally, you can include labels (e.g., for training a decoder or classifier) in the JSON file alongside the "Time Series" and "Time Stamps" fields.
 
 2. **For RHD file format**
 
@@ -102,7 +101,7 @@ To show  various use case scenarios, we have created demo input and output files
     docker run --mount type=bind,source=./demos/input/RhdDataset,target=/input --mount type=bind,source=./demos/output/RhdDataset,target=/output docker_img
     ```
 
-    This command converts Intan RHD files (a neurophysiology format) to CSV and NWB formats. No JSON file is required for this conversion.
+    This command converts Intan RHD files (a neurophysiology format) (accessed from SPARC Dataset [316]([https://sparc.science/datasets/316?type=dataset&datasetDetailsTab=files&path=files/primary/sub-VN010720/perf-01-09-20-baseline](https://sparc.science/datasets/316?type=dataset&datasetDetailsTab=files&path=files/primary/sub-VN010720/perf-01-09-20-baseline)) to CSV and NWB formats. No JSON file is required for this conversion.
 
 3. **For direct CSV format**
 
@@ -113,17 +112,27 @@ To show  various use case scenarios, we have created demo input and output files
     This command processes a toy dataset created using a Python script. It runs an analysis code on the CSV file to train a TensorFlow model and saves the results of 5-fold cross-validation as a CSV file and the model file for one of the folds as an H5 file in the zip output folder.
 
 
-
 ## Currently Supported Conversions
-|Sr. No.| Input Formats |Output Formats|
-|-------|-----------------|-------|
-|1. | \*.mat | \*.h5 (\*.nwb), \*.csv|
-|2. | \*.h5 | \*.nwb|
-|3. | \*.rhd | \*.nwb, \*.csv|
+
+|Sr. No.| Input Formats |Output Formats|-------|
+
+|-------|-----------------|-------|-------|
+
+|1. | \*.mat | \*.h5 (\*.nwb) & \*.csv|[375]([https://sparc.science/datasets/375?type=dataset&datasetDetailsTab=about&path=files/primary/sub-DP8/perf-DP8-random-patterns](https://sparc.science/datasets/375?type=dataset&datasetDetailsTab=about&path=files/primary/sub-DP8/perf-DP8-random-patterns))|
+
+|2. | \*.rhd | \*.nwb & \*.csv|[316]([https://sparc.science/datasets/316?type=dataset&datasetDetailsTab=files&path=files/primary/sub-VN010720/perf-01-09-20-baseline](https://sparc.science/datasets/316?type=dataset&datasetDetailsTab=files&path=files/primary/sub-VN010720/perf-01-09-20-baseline))|
 
 **Note:** The `.adicht` file format is currently not supported due to limitations with Linux and the use of the `adi-reader`. However, the code files for this format have been added, and future support will require only a trivial development intervention.
 
 Other file formats can be easily included in the current pipeline developed for the OSparc platform.
+
+**Production and Process**
+Steps followed in the production process- 
+1. Steps mentioned on [cookiecutter-osparc-service](https://github.com/ITISFoundation/cookiecutter-osparc-service) repository to create a pre-configured oSPARC service template were followed.
+2. [Dockerfile] (https://github.com/SPARC-FAIR-Codeathon/DataFusion/blob/main/docker/python/Dockerfile) and [metadata](https://github.com/SPARC-FAIR-Codeathon/DataFusion/blob/main/.osparc/metadata.yml) were configured to create the image and for seamless integration with osparc.
+3.  [execute.sh](https://github.com/SPARC-FAIR-Codeathon/DataFusion/blob/main/service.cli/execute.sh) was developed to run custom defined python scripts.
+4.  Custom python scripts to do the conversion and run the user-defined analysis file was added to [src](https://github.com/SPARC-FAIR-Codeathon/DataFusion/tree/main/src).
+5.  To validate and test the usability, example input and output files were added to [validation](https://github.com/SPARC-FAIR-Codeathon/DataFusion/tree/main/validation)
 
 
 ## Strengths and FAIR principle alignment
@@ -139,46 +148,29 @@ Strengthing the
 -   Standardizing the file format
 
 
+## Reporting Issues or Contributions
+[](https://github.com/SPARC-FAIR-Codeathon/SCKAN-Compare#reporting-issues-or-contributions)
+To report an issue or suggest a new feature, please use the issues page. Please check existing issues before submitting a new one.
+
+## Contribute to Project
+[](https://github.com/SPARC-FAIR-Codeathon/SCKAN-Compare#contribute-to-project)
+You can offer to help with the further development of this project by making pull requests on this repo. To do so, fork this repository and make the proposed changes. Once completed and tested, submit a pull request to this repo.
 
 
-```
-
-## Workflow (Process) Description 
-
-### Setting up Environment
-
-#### Clone repository
-Please clone or download the repository on your system. 
-
-https://github.com/ITISFoundation/osparc-simcore.git
-
-#### Operating System
-We used two different operating systems, MAC and WSL-2 (Ubuntu 22.04) for the development.
-MAC - We used to develop our plugin
-WSL-2 (Ubuntu 22.04) - For creating a plug-in
-
-<font color="red"> Pranjal! Operating System - We took leverage of multiple system
-</font>
-
-
-
-
-
-
-
-
-#### Testing
-We have tested the use of this containerized service on MacOS. Testing for other know systems such as windows and ubuntu are not done yet. However, we expect it to run as usual elsewhere.   
-
-#### 
-
-
+## License
+MIT License
 
 ## Any question or issue?
-
 We would love to hear from you. Hence, please open an issue [here]() and our team will get back to you within 1 business working day.
 
-We wish you to **Happy DataFusion**.
+We wish you to **Happy DataFusioning**.
 by Team DataFusion
+
+
+## Team Members*
+- [Muhammad Farhan Khalid](https://github.com/imeMFK01)
+- [Pranjal Garg](https://github.com/neurogarg)
+
+_* team members are equally contributed_
 
 
