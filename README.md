@@ -4,7 +4,7 @@
 
 ## Introduction
 ### Accessing Datasets on SPARC: Simplifying the Process
-Accessing datasets on Stimulating Peripheral Activity to Relieve Conditions (SPARC) can be a daunting task due to the multitude of available file formats. The SPARC portal hosts an abundance of time-series datasets, such as electroencephalography (EEG), electrocardiography (ECG), electromyography (EMG), urodynamics, manometry, and more. These datasets, besides being immensely useful for novel analysis or replication, present an opportunity for the training of sequence prediction and generation models, such as transformers, MAMBA, and RKWV, which have seen immense success in large language modeling.
+Accessing datasets on Stimulating Peripheral Activity to Relieve Conditions (SPARC) can be a daunting task due to the multitude of available file formats. The SPARC portal hosts an abundance of time-series datasets, such as electroencephalography (EEG), electrocardiography (ECG), electromyography (EMG), urodynamics, manometry, and more. These datasets, besides being immensely useful for novel analysis or replication, present an opportunity for the training of sequence prediction and generation models, such as transformers, MAMBA, and RKWV, which have seen immense success in large language modelling.
 However, the accessibility of these datasets is a significant bottleneck in the research process. The various formats available, such as `.adicht`, `.rhd`, `.mat`, and others, require different libraries for any analysis.
 To address this issue, we present a versatile cloud solution that can be deployed on SPARC's o<sup>2</sup>S<sup>2</sup>PARC platform. This solution provides users with a simple way to perform preliminary analysis on any time-series dataset of their choice.
 
@@ -114,39 +114,28 @@ To show  various use case scenarios, we have created demo input and output files
 
 ## Currently Supported Conversions
 
-|Sr. No.| Input Formats |Output Formats|-------|
+| Sr. No. | Input Formats | Output Formats | Dataset Reference |
+|---------|---------------|----------------|-------------------|
+| 1       | \*.mat        | \*.h5 (\*.nwb) & \*.csv | [375](https://sparc.science/datasets/375?type=dataset&datasetDetailsTab=about&path=files/primary/sub-DP8/perf-DP8-random-patterns) |
+| 2       | \*.rhd        | \*.nwb & \*.csv | [316](https://sparc.science/datasets/316?type=dataset&datasetDetailsTab=files&path=files/primary/sub-VN010720/perf-01-09-20-baseline) |
 
-|-------|-----------------|-------|-------|
 
-|1. | \*.mat | \*.h5 (\*.nwb) & \*.csv|[375]([https://sparc.science/datasets/375?type=dataset&datasetDetailsTab=about&path=files/primary/sub-DP8/perf-DP8-random-patterns](https://sparc.science/datasets/375?type=dataset&datasetDetailsTab=about&path=files/primary/sub-DP8/perf-DP8-random-patterns))|
+**Note:** 
+- The `.adicht` file format is currently not supported due to limitations with Linux and the use of the `adi-reader`. However, the code files for this format have been added, and future support will require only a trivial development intervention. 
+- Other file formats can be easily included in the current pipeline developed for the OSparc platform.
+- Currently \*.mat is being converted to \*.h5. Conversion to \*.nwb requires a trivial solution. [See this](https://github.com/NeurodataWithoutBorders/helpdesk/discussions/89) as discussed by [Muhammad Farhan Khalid](https://github.com/imeMFK01).
 
-|2. | \*.rhd | \*.nwb & \*.csv|[316]([https://sparc.science/datasets/316?type=dataset&datasetDetailsTab=files&path=files/primary/sub-VN010720/perf-01-09-20-baseline](https://sparc.science/datasets/316?type=dataset&datasetDetailsTab=files&path=files/primary/sub-VN010720/perf-01-09-20-baseline))|
-
-**Note:** The `.adicht` file format is currently not supported due to limitations with Linux and the use of the `adi-reader`. However, the code files for this format have been added, and future support will require only a trivial development intervention.
-
-Other file formats can be easily included in the current pipeline developed for the OSparc platform.
-
-**Production and Process**
+## Production and Process
 Steps followed in the production process- 
 1. Steps mentioned on [cookiecutter-osparc-service](https://github.com/ITISFoundation/cookiecutter-osparc-service) repository to create a pre-configured oSPARC service template were followed.
 2. [Dockerfile] (https://github.com/SPARC-FAIR-Codeathon/DataFusion/blob/main/docker/python/Dockerfile) and [metadata](https://github.com/SPARC-FAIR-Codeathon/DataFusion/blob/main/.osparc/metadata.yml) were configured to create the image and for seamless integration with osparc.
 3.  [execute.sh](https://github.com/SPARC-FAIR-Codeathon/DataFusion/blob/main/service.cli/execute.sh) was developed to run custom defined python scripts.
-4.  Custom python scripts to do the conversion and run the user-defined analysis file was added to [src](https://github.com/SPARC-FAIR-Codeathon/DataFusion/tree/main/src).
+4.  Custom Python scripts to do the conversion and run the user-defined analysis file was added to [src](https://github.com/SPARC-FAIR-Codeathon/DataFusion/tree/main/src).
 5.  To validate and test the usability, example input and output files were added to [validation](https://github.com/SPARC-FAIR-Codeathon/DataFusion/tree/main/validation)
 
 
 ## Strengths and FAIR principle alignment
-Strengthing the 
-
-
--   Bridging a gap in scientific collaboration
-    
--   Large number of different formats are available either free and open source or proprietary
-    
--   High degree of deviation in academia and industry from data collection to data storage
-    
--   Standardizing the file format
-
+The cornerstone of FAIR is the ["reuse of scholarly data"](https://www.nature.com/articles/sdata201618) which is the primary objective of this service. By converting the available dataset to a common format (*/nwb for neuroscience datasets and */csv for all time series data), we are necessarily aiming to empower scientists, scholars, students and researchers worldwide to reuse the existing data in an easy manner. Furthermore, FAIR wants to empower ["machines to automatically find and use the data"](https://www.nature.com/articles/sdata201618) which aligns perfectly with our solution. With a step forward, we also enable users to run their analysis files based on these datasets, further enabling them to make novel discoveries or replicate existing results!
 
 ## Reporting Issues or Contributions
 [](https://github.com/SPARC-FAIR-Codeathon/SCKAN-Compare#reporting-issues-or-contributions)
@@ -160,7 +149,7 @@ You can offer to help with the further development of this project by making pul
 ## License
 MIT License
 
-## Any question or issue?
+## Any questions or issues?
 We would love to hear from you. Hence, please open an issue [here]() and our team will get back to you within 1 business working day.
 
 We wish you to **Happy DataFusioning**.
