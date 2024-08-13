@@ -1,4 +1,6 @@
 # DataFusion
+**An o<sup>2</sup>S<sup>2</sup>PARC service to enhance the usability of SPARC by converting multiple SPARC’s public dataset file formats (or others) (such as \*.mat and \*.rhd) to a common format (\*.nwb) and facilitating hypothesis-driven studies by allowing preliminary analyses.**
+
 
 ### Dataset & Study Design Problems
 In neuroscience, there are a large number of different data file formats that contain a high degree of deviation in datasets from data collection to data storage and thus, difficult for results’ reproducibility. This also tends to be weak or no scientific collaboration. Moreover, due to the lack of access to the required facilities, there is also very challenging to choose and use publically available datasets. Furthermore, various formats available, such as  `.rhd`, `.mat`, and others, require different libraries for any analysis.
