@@ -1,6 +1,6 @@
 # DataFusion
 
-**An o<sup>2</sup>S<sup>2</sup>PARC service to enhance the usability of SPARC by converting multiple SPARC’s public dataset file formats (or others) (such as \*.mat and \*.rhd) to common format (\*.nwb) and facilitating hypothesis-driven studies by allowing preliminary analyses.**
+**An o<sup>2</sup>S<sup>2</sup>PARC service to enhance the usability of SPARC by converting multiple SPARC’s public dataset file formats (or others) (such as \*.mat and \*.rhd) to a common format (\*.nwb) and facilitating hypothesis-driven studies by allowing preliminary analyses.**
 
 ## Introduction
 ### Accessing Datasets on SPARC: Simplifying the Process
@@ -57,7 +57,7 @@ The service is currently available as a Docker container. In the future, it can 
 
 
 #### How to run analysis code?
-To run the analysis code effectively, follow these guidelines:
+To run the analysis code effectively, follow these guidelines (refer to [this implementation](#demo-files-3) to run user-defined analysis files):
 
 1. **Create a Directory**:
    Create a directory named `analysis_py` where you will place all necessary files.
@@ -68,7 +68,7 @@ To run the analysis code effectively, follow these guidelines:
 **Please note that currently, this service supports the use of only `python3.9`. Ensure that your script and dependencies are compatible with Python 3.9 when using this service.**
 
 3. **Prepare Your Analysis Script**:
-   Include an `analysis.py` file in the `analysis_py` directory. Make sure to adhere to the provided template for the script. 
+   Include an `analysis.py` file in the `analysis_py` directory. Make sure to adhere to the provided [template](https://github.com/SPARC-FAIR-Codeathon/DataFusion/blob/main/misc/template.py) for the script. Don't forget to rename the template to `analysis.py`.
    
 **Do not change the names of files, folders, or functions defined in the template file.**
 
@@ -128,7 +128,7 @@ To show  various use case scenarios, we have created demo input and output files
 ## Production and Process
 Steps followed in the production process- 
 1. Steps mentioned on [cookiecutter-osparc-service](https://github.com/ITISFoundation/cookiecutter-osparc-service) repository to create a pre-configured oSPARC service template were followed.
-2. [Dockerfile] (https://github.com/SPARC-FAIR-Codeathon/DataFusion/blob/main/docker/python/Dockerfile) and [metadata](https://github.com/SPARC-FAIR-Codeathon/DataFusion/blob/main/.osparc/metadata.yml) were configured to create the image and for seamless integration with osparc.
+2. [Dockerfile](https://github.com/SPARC-FAIR-Codeathon/DataFusion/blob/main/docker/python/Dockerfile) and [metadata](https://github.com/SPARC-FAIR-Codeathon/DataFusion/blob/main/.osparc/metadata.yml) were configured to create the image and for seamless integration with osparc.
 3.  [execute.sh](https://github.com/SPARC-FAIR-Codeathon/DataFusion/blob/main/service.cli/execute.sh) was developed to run custom defined python scripts.
 4.  Custom Python scripts to do the conversion and run the user-defined analysis file was added to [src](https://github.com/SPARC-FAIR-Codeathon/DataFusion/tree/main/src).
 5.  To validate and test the usability, example input and output files were added to [validation](https://github.com/SPARC-FAIR-Codeathon/DataFusion/tree/main/validation)
