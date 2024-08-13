@@ -4,8 +4,15 @@ import mat_file
 #import adicht_file
 import pandas as pd
 
-
 def run(data_file_ext, data_file, field_name_dictionary):
+    """
+    Covnerts the files to csv, nwb, h5 (wherever applicable)
+    :param data_file_ext- extension of the input data files
+    :param data_file- file name/path
+    :param field_name_dictionary- field names as derived from json file
+    :return pandas dataframe of the csv file
+    """
+    
     supported_ext = [".mat", ".nwb", ".csv", ".txt", ".adicht", ".rhd"]
     df = None
     if data_file_ext == supported_ext[0]:
@@ -16,7 +23,7 @@ def run(data_file_ext, data_file, field_name_dictionary):
         else:
             df = pd.DataFrame({"Time": "empty", "Series": "empty" })
 
-        mat_file.convert_mat_to_h5(data_file)
+        mat_file.convert_mat_to_h5(data_file) 
 
     ## Add linux implementation in future
     # if data_file_ext == supported_ext[4]: ## adicht
