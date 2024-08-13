@@ -1,22 +1,26 @@
 # DataFusion
 
-**An o<sup>2</sup>S<sup>2</sup>PARC service to enhance the usability of SPARC by converting multiple SPARC’s public dataset file formats (or others) (such as \*.mat and \*.rhd) to a common format (\*.nwb) and facilitating hypothesis-driven studies by allowing preliminary analyses.**
+### Dataset & Study Design Problems
+In neuroscience, there are a large number of different data file formats that contain a high degree of deviation in datasets from data collection to data storage and thus, difficult for results’ reproducibility. This also tends to be weak or no scientific collaboration. Moreover, due to the lack of access to the required facilities, there is also very challenging to choose and use publically available datasets. Furthermore, various formats available, such as  `.rhd`, `.mat`, and others, require different libraries for any analysis.
 
-## Introduction
-### Accessing Datasets on SPARC: Simplifying the Process
-Accessing datasets on Stimulating Peripheral Activity to Relieve Conditions (SPARC) can be a daunting task due to the multitude of available file formats. The SPARC portal hosts an abundance of time-series datasets, such as electroencephalography (EEG), electrocardiography (ECG), electromyography (EMG), urodynamics, manometry, and more. These datasets, besides being immensely useful for novel analysis or replication, present an opportunity for the training of sequence prediction and generation models, such as transformers, MAMBA, and RKWV, which have seen immense success in large language modelling.
-However, the accessibility of these datasets is a significant bottleneck in the research process. The various formats available, such as `.adicht`, `.rhd`, `.mat`, and others, require different libraries for any analysis.
-To address this issue, we present a versatile cloud solution that can be deployed on SPARC's o<sup>2</sup>S<sup>2</sup>PARC platform. This solution provides users with a simple way to perform preliminary analysis on any time-series dataset of their choice.
+### Motivation Behind DataFusion
+DataFusion has been developed to bridge a gap among stakeholders of neuroscience by Findable, accessible, interoperable, and reusable (FAIR) data principles and utilizing the common standardized file format - neurodata without borders (NWB). DataFusion also promotes hypothesis-driven studies to SPARC’s users who can choose the right dataset for their study by harnessing the potential of our preliminary analyses pipeline.
 
-## Solution
-**TL;DR:** We present a service with two functions that can be used standalone or in collaboration- 1) Conversion of different formats to a common format 2) Run user-defined analysis scripts
+### Simplifying the Process to Access Datasets on SPARC 
+Specific to Stimulating Peripheral Activity to Relieve Conditions (SPARC), accessing datasets can be a daunting task due to the multitude of available file formats. The SPARC portal hosts an abundance of time-series datasets, such as electroencephalography (EEG), electrocardiography (ECG), electromyography (EMG), urodynamics, manometry, and more. However, the accessibility of these datasets is a significant bottleneck in the research process. The various formats available, such as  `.rhd`, `.mat`, and others, require different libraries for any analysis.
+To address this issue, we present a multi-purpose cloud solution that can be deployed on o<sup>2</sup>S<sup>2</sup>PARC platform. This solution provides users with a simple way to perform preliminary analysis on any time-series dataset of their choice.
 
-**DataFusion Service** is a versatile and scalable solution designed to convert various file formats into a common CSV format. CSV is a human-readable file unlike other file formats occasionally used to store time series data, enabling almost everybody (especially those who don't know how to code) to see the data quickly and if required use it to plot with Excel or Google Sheets. It also supports the conversion of neuroscience datasets, such as Intan \*.rhd files, into the NWB (Neuroscience Without Borders) format. NWB is also built on the principles of FAIR (Findable, Accessible, Interoperable, and Reusable), empowering neuroscientists worldwide to perform analyses on datasets prepared by other laboratories.
-Users can upload their preferred datasets or directly access them using PENSIEVE or a URL from SPARC datasets. These can be used in tandem with a file picker service. To further support users in performing preliminary analyses, such as training a neural network decoder or visualizing the dynamics of any variable as it evolves over time, users can upload a Python script along with the necessary requirements to run their code. This can be done for their original file or the converted \*.csv file (`pandas DataFrame`).
+## DataFusion - A Solution
+We developed a service consisting of two functionalities that can either be used separately or together 
+1. Conversion of different formats to a common format (\*.nwb)
+2. Executing user-defined preliminary analyses
+   
+**DataFusion Service** is a versatile and scalable solution designed to convert various file formats into a common CSV format. CSV is a human-readable file unlike other file formats occasionally used to store time series data, enabling almost everybody (especially those who don't know how to code) to see the data quickly and if required use it to plot with Excel or Google Sheets. It also supports the conversion of neuroscience datasets, such as Intan \*.rhd files, into the NWB (Neuroscience Without Borders) format. NWB is also built on the principles of FAIR, empowering neuroscientists worldwide to perform analyses on datasets prepared by other laboratories.
+Users can upload their preferred datasets or directly access them using PENSIEVE or a URL from SPARC datasets. These can be used in tandem with a file picker service. To further support users in performing preliminary analyses, such as training a neural network decoder or visualizing the dynamics of any variable as it evolves with time, users can upload a Python script along with the necessary requirements to run their code. This can be done for their original file or the converted \*.csv file (`pandas DataFrame`).
 Finally, the outputs, including NWB, CSV, and analysis result files, are stored in an output folder available for download.
 
 ## How to use?
-#### DataFusion Deployment - A step-by-step instructions guide
+#### DataFusion Deployment - A step-by-step guidelines
 The service is currently available as a Docker container. In the future, it can be uploaded directly to o<sup>2</sup>S<sup>2</sup>PARC, as it is built using `cookiecutter-osparc-service`. To use it, follow these steps:
 
 1. **Clone the repository**
@@ -111,9 +115,9 @@ To show  various use case scenarios, we have created demo input and output files
     docker run --mount type=bind,source=./demos/input/CsvDataset,target=/input --mount type=bind,source=./demos/output/CsvDataset,target=/output docker_img
     ```
 
-    This command processes a toy dataset created using a Python script. It runs an analysis code on the CSV file to train a TensorFlow model and saves the results of 5-fold cross-validation as a CSV file and the model file for one of the folds as an H5 file in the zip output folder.
+    This command processes a toy dataset created using a Python script. It runs an analysis code on the CSV file to train a TensorFlow model and saves the results of the 5-fold cross-validation as a CSV file and the model file for one of the folds as an H5 file in the zip output folder.
 
-
+____
 ## Currently Supported Conversions
 
 | Sr. No. | Input Formats | Output Formats | Dataset Reference |
@@ -136,27 +140,30 @@ Steps followed in the production process-
 5.  To validate and test the usability, example input and output files were added to [validation](https://github.com/SPARC-FAIR-Codeathon/DataFusion/tree/main/validation)
 6.  A summary of the backend Python scripts is given [here](https://github.com/SPARC-FAIR-Codeathon/DataFusion/tree/main/src/datawave#readme).
 
+## Testing
+Only the MAC operating system has been tested for local DataFusion deployment.
 
 ## Strengths and FAIR principle alignment
-The cornerstone of FAIR is the ["reuse of scholarly data"](https://www.nature.com/articles/sdata201618) which is the primary objective of this service. By converting the available dataset to a common format (*/nwb for neuroscience datasets and */csv for all time series data), we are necessarily aiming to empower scientists, scholars, students and researchers worldwide to reuse the existing data in an easy manner. Furthermore, FAIR wants to empower ["machines to automatically find and use the data"](https://www.nature.com/articles/sdata201618) which aligns perfectly with our solution. With a step forward, we also enable users to run their analysis files based on these datasets, further enabling them to make novel discoveries or replicate existing results!
+The cornerstone of Findable, accessible, interoperable, and reusable (FAIR) is the ["reuse of scholarly data"](https://www.nature.com/articles/sdata201618) which is the primary objective of this service. By converting the available dataset to a common format (\*.nwb for neuroscience datasets and \*.csv for all time series data), we are necessarily aiming to empower scientists, scholars, students and researchers worldwide to reuse the existing data in an easy manner. Furthermore, FAIR wants to empower ["machines to automatically find and use the data"](https://www.nature.com/articles/sdata201618) which aligns perfectly with our solution. With a step forward, we also enable users to run their analysis files based on these datasets, further enabling them to make novel discoveries or replicate existing results!
 
 ## Reporting Issues or Contributions
-[](https://github.com/SPARC-FAIR-Codeathon/SCKAN-Compare#reporting-issues-or-contributions)
-To report an issue or suggest a new feature, please use the issues page. Please check existing issues before submitting a new one.
+We are delighted to have your kind input (such as reporting issues or suggestions for new features) for improving this repository. However, please review the existing issues before submitting a new one [here](https://github.com/SPARC-FAIR-Codeathon/DataFusion/issues). 
 
-## Contribute to Project
-[](https://github.com/SPARC-FAIR-Codeathon/SCKAN-Compare#contribute-to-project)
-You can offer to help with the further development of this project by making pull requests on this repo. To do so, fork this repository and make the proposed changes. Once completed and tested, submit a pull request to this repo.
+___
+## Contributions
+Everyone is welcome to contribute to this repository by using [pull requests](https://github.com/SPARC-FAIR-Codeathon/DataFusion/pulls). After reviewing your code we will merge with a main branch.
 
-
+___
 ## License
-MIT License
+This repository is based on the MIT License and further details can be found [here](https://github.com/SPARC-FAIR-Codeathon/DataFusion/blob/main/LICENSE)
 
-## Any questions or issues?
-We would love to hear from you. Hence, please open an issue [here]() and our team will get back to you within 1 business working day.
+___
+## Any questions?
+We would love to hear from you. Hence, please open an issue [here](https://github.com/SPARC-FAIR-Codeathon/DataFusion/issues) (as a discussion forum is not currently being supported in this repository) and our team will get back to you on this.
 
-We wish you to **Happy DataFusioning**.
-by Team DataFusion
+We wish you to **Happy DataFusioning**
+
+by **Team DataFusion**
 
 
 ## Team Members*
