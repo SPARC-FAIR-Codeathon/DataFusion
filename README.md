@@ -45,7 +45,8 @@ The service is currently available as a Docker container. In the future, it can 
     If this command runs without errors, the service is functioning correctly. Note that warnings may appear during this process; these are expected.
 
 4. **Input your files or run demos**
-   To run demos refer to [this](#Demo-files). To run your/user defined input files, use the following command after building the image. Add your filepaths in the defined placeholder.
+   
+   To run demos refer to [this](#Demo-files). To run your/user-defined input files, use the following command after building the image. Add your filepaths in the defined placeholder.
    
     ```bash
     $ docker run --mount type=bind,source=<input_file_path>,target=/input --mount type=bind,source=<output_file_path>,target=/output data_fusion_img
